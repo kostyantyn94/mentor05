@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
 
-import {Map} from "./components/Map"
+import {Map, MODES} from "./components/Map"
 import { Autocomplete } from "./components/Autocomplete";
 
 import s from './App.module.css';
@@ -13,10 +13,15 @@ const defaultCenter = {
   lng: 31.10
 };
 
+
 const libraries = ['places']
 
 const App = () => {
   const [center, setCenter] = React.useState(defaultCenter)
+  const [mode, setMode] = React.useState(MODES.MOVE)
+  const [markers, setMarkers] = React.useState([])
+  
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: API_KEY,
@@ -30,12 +35,36 @@ const App = () => {
     [],
   )
 
+    const toggleMode = React.useCallback(() => {
+      switch(mode) {
+        case MODES.MOVE:
+          setMode(MODES.SET_MARKER);
+          break;
+        case MODES.SET_MARKER:
+          setMode(MODES.MOVE);
+          break;
+        default:
+          setMode(MODES.MOVE);
+      }
+      console.log(mode)
+    }, [mode])
+
+    const onMarkerAdd = (coordinates) => { 
+      setMarkers([...markers, coordinates]);
+    }
+
+    const clear = React.useCallback(() => {
+      setMarkers([])
+    }, [])
+
   return (
     <div>
       <div className={s.addressSearchContainer}>
         <Autocomplete isLoaded={isLoaded} onSelect={onPlaceSelect} />
+        <button className={s.modeToggle} onClick={toggleMode}>Set markers</button>
+        <button className={s.modeToggle} onClick={clear}>Clear</button>
       </div>
-      {isLoaded ? <Map center={center} /> : <h2>Loading</h2>}
+      {isLoaded ? <Map center={center} mode={mode} markers={markers} onMarkerAdd={onMarkerAdd}/> : <h2>Loading</h2>}
     </div>
   );
 }
