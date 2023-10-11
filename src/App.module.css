@@ -1,17 +1,35 @@
 .addressSearchContainer {
-  max-width: 500px;
-  width: 100%;
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+  padding: 10px;
   display: flex;
+  flex-direction: column;
+  background: #fff;
+  width: fit-content;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+}
+
+.autocompleteWrapper {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  width: 100%;
+}
+
+.collapseButton {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  z-index: 999;
+  width: 100px;
+  height: 50px;
 }
 
 .modeToggle {
   background: #FFF;
-  border: 2px solid black;
+  border: 1px solid black;
   font-size: 1rem;
   cursor: pointer;
+  width: 100px;
 }
