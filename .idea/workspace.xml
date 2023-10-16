@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86635071-4ff8-4605-af40-23b123cb67f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/PlacesList/PlacesList.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/PlacesList/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/SidebarWrapper/SidebarWrapper.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/SidebarWrapper/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CurrentLocationMarker/CurrentLocationMarker.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CurrentLocationMarker/CurrentLocationMarker.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Map/Map.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Map/Map.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,6 +33,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="ReactDesignerToolWindowState">
@@ -57,7 +53,10 @@
       <option name="presentableId" value="Default" />
       <updated>1695124649628</updated>
       <workItem from="1695124651014" duration="586000" />
-      <workItem from="1697022834051" duration="3856000" />
+      <workItem from="1697022834051" duration="5535000" />
+      <workItem from="1697035952017" duration="34000" />
+      <workItem from="1697036246329" duration="1275000" />
+      <workItem from="1697457626377" duration="5010000" />
     </task>
     <servers />
   </component>

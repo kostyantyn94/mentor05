@@ -1,9 +1,7 @@
-import React, {useRef} from 'react';
-import {GoogleMap, DirectionsRenderer} from '@react-google-maps/api';
+import React, {useEffect} from 'react';
+import {GoogleMap, DirectionsRenderer, DirectionsService} from '@react-google-maps/api';
 import s from './Map.module.css'
 import {defaultTheme} from './Theme';
-import {CurrentLocationMarker} from '../CurrentLocationMarker/CurrentLocationMarker';
-import {Marker} from '../Marker'
 
 const containerStyle = {
   width: '100%',
@@ -30,7 +28,9 @@ export const MODES = {
   SET_MARKER: 1
 }
 
-const Map = ({center, markers}) => {
+const Map = ({center, places}) => {
+  const [directionsResponse, setDirectionsResponse] = React.useState(null);
+  const [directionsServiceOption, setDirectionsServiceOption] = React.useState({});
 
   const mapRef = React.useRef(undefined)
 
@@ -42,6 +42,42 @@ const Map = ({center, markers}) => {
     mapRef.current = undefined
   }, []);
 
+  let count = React.useRef(0);
+  const directionsCallback = res => {
+    if (res !== null && count.current < 2) {
+      if (res.status === 'OK') {
+        count.current += 1;
+        setDirectionsResponse(res);
+      } else {
+        count.current = 0;
+        console.log('res: ', res);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (places.length === 1) {
+      // means it is the origin
+      setDirectionsServiceOption({
+        travelMode: "DRIVING",
+        origin: places[0].name
+      })
+    } else if (places.length >= 2) {
+      const waypoints = places
+        .filter(place => place.place_type === 'waypoint')
+        .map(place => ({
+          location: place.name,
+          stopover: true,
+        }))
+      setDirectionsServiceOption({
+        travelMode: "DRIVING",
+        origin: places.find(place => place.place_type === 'origin'),
+        destination: places.find(place => place.place_type === 'destination'),
+        waypoints
+      })
+    }
+  }, [places]);
+
   return <div className={s.container}>
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -51,11 +87,18 @@ const Map = ({center, markers}) => {
       onUnmount={onUnmount}
       options={defaultOptions}
     >
-      <DirectionsRenderer directions={markers} />
-      <CurrentLocationMarker position={center}/>
-      {markers.map((pos) => {
-        return <Marker position={pos}/>
-      })}
+      {directionsResponse !== null && (
+        <DirectionsRenderer
+          options={{
+            directions: directionsResponse,
+          }}
+        />
+      )}
+
+      <DirectionsService
+        options={directionsServiceOption}
+        callback={directionsCallback}
+      />
     </GoogleMap>
   </div>
 }

@@ -1,7 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {useJsApiLoader} from "@react-google-maps/api";
-import {DirectionsService} from '@react-google-maps/api';
-import {Map, MODES} from "./components/Map"
+import {Map} from "./components/Map"
 import {Autocomplete} from "./components/Autocomplete";
 import {PlacesList} from "./components/PlacesList";
 
@@ -14,8 +13,6 @@ const defaultCenter = {
   lat: 48.22,
   lng: 31.10
 };
-
-
 
 const App = () => {
   const [center, setCenter] = useState(defaultCenter)
@@ -32,30 +29,21 @@ const App = () => {
 
   const onPlaceSelect = React.useCallback(
     ({coordinates, name, place_id}) => {
+      setCenter(coordinates);
+      // todo make a new component which will hold 4 buttons (add as final dest., add as waypoint, add as starting point, cancel)
+      // todo when user clicks on place from autocomplete, show component instead of places list
+
+      // todo if user clicks cancel - show list instead of buttons, don't add city/place to places state variable
+      // todo if user clicks add as final destination - update places array with new city/place value
+      // todo if user clicks add as origin - update places array with new city/place value
+      // todo if user clicks add as waypoint - update places array with new city/place value
       const place = {
         name,
-        id: place_id
+        id: place_id,
+        place_type: 'destination/waypoint/origin'
       }
-      setCenter(coordinates)
       setMarkers([...markers, coordinates])
       setPlaces([...places, place])
-
-      if (places.length >= 2) {
-        DirectionsService.route({
-          origin: markers[0],
-          destination: markers[markers.length-1],
-          travelMode: "driving",
-        }, (result, status) => {
-          console.log(result, status)
-          // if (status === google.maps.DirectionsStatus.OK) {
-          //   this.setState({
-          //     directions: result,
-          //   });
-          // } else {
-          //   console.error(`error fetching directions ${result}`);
-          // }
-        });
-      }
     },
     [places, markers],
   )
@@ -86,7 +74,7 @@ const App = () => {
         <PlacesList places={places} onPlacesRemove={handlePlacesRemove} />
       </SidebarWrapper>
       <button className={s.collapseButton} onClick={toggleSidebar}>{sidebarOpened ? 'Collapse' : 'Expand'}</button>
-      {isLoaded ? <Map center={center} markers={markers} /> : <h2>Loading</h2>}
+      {isLoaded ? <Map places={places} center={center} /> : <h2>Loading</h2>}
     </div>
   );
 }
