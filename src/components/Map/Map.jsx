@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {GoogleMap} from '@react-google-maps/api';
+import {GoogleMap, DirectionsRenderer} from '@react-google-maps/api';
 import s from './Map.module.css'
 import {defaultTheme} from './Theme';
 import {CurrentLocationMarker} from '../CurrentLocationMarker/CurrentLocationMarker';
@@ -30,7 +30,7 @@ export const MODES = {
   SET_MARKER: 1
 }
 
-const Map = ({center, mode, markers, onMarkerAdd}) => {
+const Map = ({center, markers}) => {
 
   const mapRef = React.useRef(undefined)
 
@@ -42,16 +42,6 @@ const Map = ({center, mode, markers, onMarkerAdd}) => {
     mapRef.current = undefined
   }, []);
 
-  const onClick = React.useCallback(
-    (loc) => {
-      if (mode === MODES.SET_MARKER) {
-        const lat = loc.latLng.lat();
-        const lng = loc.latLng.lng();
-        console.log({lat, lng})
-        onMarkerAdd({lat, lng})
-      }
-    }, [mode, onMarkerAdd])
-
   return <div className={s.container}>
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -59,9 +49,9 @@ const Map = ({center, mode, markers, onMarkerAdd}) => {
       zoom={10}
       onLoad={onLoad}
       onUnmount={onUnmount}
-      onClick={onClick}
       options={defaultOptions}
     >
+      <DirectionsRenderer directions={markers} />
       <CurrentLocationMarker position={center}/>
       {markers.map((pos) => {
         return <Marker position={pos}/>

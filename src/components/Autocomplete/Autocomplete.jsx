@@ -43,7 +43,12 @@ export const Autocomplete = ({isLoaded, onSelect}) => {
           getGeocode({ address: description }).then((results) => {
             const { lat, lng } = getLatLng(results[0]);
             console.log("📍 Coordinates: ", { lat, lng });
-            onSelect({ lat, lng })
+            console.log("📍 Results: ", { results});
+            onSelect({ 
+              coordinates: { lat, lng},
+              name: results[0].formatted_address,
+              place_id: results[0].place_id
+             })
           });
         };
     

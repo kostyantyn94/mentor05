@@ -10,9 +10,10 @@ export const SidebarWrapper = ({ children, className, isOpened }) => {
   );
 };
 
+
 const Sidebar = styled.div`
   display: ${props => props.isOpened ? "flex" : "none"};
-}`;
+`;
 
 SidebarWrapper.propTypes = {
   children: PropTypes.array,

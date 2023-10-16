@@ -1,14 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const PlacesList = props => {
+export const PlacesList = ({places, onPlacesRemove}) => {
+  console.log(places)
   return (
-    <div>
-      places list container
-    </div>
+    <>
+      {places.map(place=>(
+        <div>
+          {place.name}
+          <button 
+            onClick={()=> {onPlacesRemove(place.id)}}
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+    </>
   );
 };
 
 PlacesList.propTypes = {
-
+  places: PropTypes.bool,
+  onPlacesRemove: PropTypes.func
 };
+
+PlacesList.defaultProps = {
+  places: [],
+  onPlacesRemove: () => {}
+}
